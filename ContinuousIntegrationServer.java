@@ -14,24 +14,47 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 */
 public class ContinuousIntegrationServer extends AbstractHandler
 {
-    public void handle(String target,
-                       Request baseRequest,
-                       HttpServletRequest request,
-                       HttpServletResponse response) 
-        throws IOException, ServletException
+    //    public void handle(String target,
+//                       Request baseRequest,
+//                       HttpServletRequest request,
+//                       HttpServletResponse response) 
+//        throws IOException, ServletException
+//    {
+//        response.setContentType("text/html;charset=utf-8");
+//        response.setStatus(HttpServletResponse.SC_OK);
+//        baseRequest.setHandled(true);
+//
+//        System.out.println(target);
+//
+//        // here you do all the continuous integration tasks
+//        // for example
+//        // 1st clone your repository
+//        // 2nd compile the code
+//
+//        response.getWriter().println("CI job is well done");
+//    }
+	
+	@Override
+    public void handle(String target, Request jettyRequest, HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-        baseRequest.setHandled(true);
+        // Mark the request as handled by this Handler.
+        jettyRequest.setHandled(true);
 
-        System.out.println(target);
+        response.setStatus(200);
+        response.setContentType("text/html; charset=UTF-8");
 
-        // here you do all the continuous integration tasks
-        // for example
-        // 1st clone your repository
-        // 2nd compile the code
-
-        response.getWriter().println("CI job is well done");
+        // Write a Hello World response.
+        response.getWriter().print("" +
+            "<!DOCTYPE html>" +
+            "<html>" +
+            "<head>" +
+            "  <title>Jetty Hello World Handler</title>" +
+            "</head>" +
+            "<body>" +
+            "  <p>Hello World</p>" +
+            "</body>" +
+            "</html>" +
+            "");
     }
  
     // used to start the CI server in command line
